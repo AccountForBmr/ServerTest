@@ -12,6 +12,18 @@ connectDB()
 
 const BookModel = require('./models/book.model')
 
+const UserModel = require('./models/user.model')
+
+app.post('/userValidate', async (req, res) => {
+    console.log(req);
+
+    return res.status(200).json({
+        msg: 'Ok',
+        abc: req,
+        bcd: res
+        })
+})
+
 app.get('/api/v1/books', async (req, res) => {
 
     const { limit = 5, orderBy = 'name', sortBy = 'asc', keyword } = req.query
