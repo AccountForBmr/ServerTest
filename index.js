@@ -14,6 +14,16 @@ const BookModel = require('./models/book.model')
 
 const UserModel = require('./models/user.model')
 
+app.get('/userValidate', async (req, res) => {
+    console.log(req);
+
+    return res.status(200).json({
+        msg: 'Ok',
+        abc: req,
+        bcd: res
+        })
+})
+
 app.post('/userValidate', async (req, res) => {
     console.log(req);
 
