@@ -35,7 +35,7 @@ app.post('/userValidate', async (req, res) => {
             msg: "Invalid request"
         })
     }
-    let userFound = UserModel.find({name:req.body.name});
+    let userFound = await UserModel.find({name:req.body.name});
     console.log("Il body:");
     console.log(req.body);
     console.log("L'user trovato");
