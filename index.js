@@ -35,17 +35,17 @@ app.post('/userValidate', async (req, res) => {
             msg: "Invalid request"
         })
     }
-    let userFound = await UserModel.find({name:req.body.name});
-    console.log("Il body:");
-    console.log(req.body);
-    console.log("L'user trovato");
-    console.log(userFound);
-
-    
-
     try {
+
+        let userFound = await UserModel.find({name:req.body.name});
+        console.log("Il body:");
+        console.log(req.body);
+        console.log("L'user trovato");
+        console.log(userFound);
+    
         return res.status(200).json({
-            msg: 'Ok'
+            msg: 'Ok',
+            data: userFound
             })
     } catch (error) {
         return res.status(500).json({
