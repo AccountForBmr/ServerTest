@@ -48,7 +48,7 @@ app.post('/userValidate', async (req, res) => {
         if(users.length == 0) {
             //add to db
             const saltRounds = 7;
-            const hashedPassword = await bcrypt.hash(password, saltRounds);
+            const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
 
             const newUser = new UserModel({ name:req.body.name, password: hashedPassword });
             await newUser.save();
