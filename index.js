@@ -13,6 +13,7 @@ connectDB()
 const BookModel = require('./models/book.model')
 
 const UserModel = require('./models/user.model')
+const { default: mongoose } = require('mongoose')
 
 app.get('/userValidate', async (req, res) => {
     console.log(req.body);
@@ -29,7 +30,18 @@ app.get('/userValidate', async (req, res) => {
 })
 
 app.post('/userValidate', async (req, res) => {
+    if(!req.body.name||!req.body.password) {
+        return res.status(500).json({
+            msg: "Invalid request"
+        })
+    }
+    let userFound = UserModel.find({name:req.body.name});
+    console.log("Il body:");
     console.log(req.body);
+    console.log("L'user trovato");
+    console.log(userFound);
+
+    
 
     try {
         return res.status(200).json({
