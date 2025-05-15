@@ -56,7 +56,7 @@ app.post('/userValidate', async (req, res) => {
         } else {
             //validate
             let user = users[0]; 
-            const passwordMatch = bcrypt.compare(req.body.password, user.password);
+            const passwordMatch = await bcrypt.compare(req.body.password, user.password);
 
             if(passwordMatch) {
                 return res.status(200).send("Correct Password")
