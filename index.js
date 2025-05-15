@@ -8,6 +8,8 @@ app.use(express.json())
 
 const connectDB = require('./connectMongo')
 
+const bcrypt = require('bcrypt')
+
 connectDB()
 
 const BookModel = require('./models/book.model')
@@ -37,15 +39,35 @@ app.post('/userValidate', async (req, res) => {
     }
     try {
 
-        let userFound = await UserModel.find({name:req.body.name});
+        let users = await UserModel.find({name:req.body.name});
         console.log("Il body:");
         console.log(req.body);
         console.log("L'user trovato");
-        console.log(userFound);
+        console.log(users);
+
+        if(users.length == 0) {
+            //add to db
+            const saltRounds = 7;
+            const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+            const newUser = new UserModel({ name:req.body.name, password: hashedPassword });
+            await newUser.save();
+
+        } else {
+            //validate
+            let user = users[0]; 
+            const passwordMatch = bcrypt.compare(password, user.password);
+
+            if(passwordMatch) {
+                return res.status(200).send("Correct Password")
+            } else {
+                return res.status(401).send("Wrong Password");
+            }
+        }
     
         return res.status(200).json({
             msg: 'Ok',
-            data: userFound
+            data: users
             })
     } catch (error) {
         return res.status(500).json({
