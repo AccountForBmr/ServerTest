@@ -119,6 +119,9 @@ app.post('/tmpHypno', async (req, res) => {
         console.log("Hypnos trovate");
         console.log(hypnos);
 
+        let newHypno = new HypnoModel(req.body);
+        await newHypno.save();
+
         /*
         if(users.length == 0) {
             //add to db
