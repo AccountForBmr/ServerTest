@@ -119,7 +119,7 @@ app.post('/tmpHypno', async (req, res) => {
         console.log("Hypnos trovate");
         console.log(hypnos);
 
-        let newHypno = new HypnoModel(req.body);
+        let newHypno = new HypnoModel(req.body.hypno);
         await newHypno.save();
 
         /*
