@@ -34,7 +34,11 @@ app.get('/userValidate', async (req, res) => {
 app.post('/userValidate', async (req, res) => {
     if(!req.body.name||!req.body.password) {
         return res.status(500).json({
-            msg: "Invalid request"
+            msg: "Invalid request",
+            headers: { 
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
         })
     }
     try {
@@ -59,19 +63,37 @@ app.post('/userValidate', async (req, res) => {
             const passwordMatch = await bcrypt.compare(req.body.password, user.password);
 
             if(passwordMatch) {
-                return res.status(200).send("Correct Password")
+                return res.status(200).send("Correct Password").json({
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                });
             } else {
-                return res.status(401).send("Wrong Password");
+                return res.status(401).send("Wrong Password").json({
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                });
             }
         }
     
         return res.status(200).json({
             msg: 'Ok',
-            data: users
-            })
+            data: users,
+            headers: { 
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+        })
     } catch (error) {
         return res.status(500).json({
-            msg: error.message
+            msg: error.message,
+            headers: { 
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
         })
     }
 })
