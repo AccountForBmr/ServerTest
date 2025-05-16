@@ -15,6 +15,9 @@ connectDB()
 const BookModel = require('./models/book.model')
 
 const UserModel = require('./models/user.model')
+
+const HypnoModel = require('./models/hypno.model')
+
 const { default: mongoose } = require('mongoose')
 
 app.get('/userValidate', async (req, res) => {
@@ -82,6 +85,74 @@ app.post('/userValidate', async (req, res) => {
         return res.status(200).json({
             msg: 'Ok',
             data: users,
+            headers: { 
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+        })
+    } catch (error) {
+        return res.status(500).json({
+            msg: error.message,
+            headers: { 
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+        })
+    }
+})
+
+app.post('/tmpHypno', async (req, res) => {
+    if(!req.body.hypno) {
+        return res.status(500).json({
+            msg: "Invalid request",
+            headers: { 
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+        })
+    }
+    try {
+
+        let hypnos = await HypnoModel.find();
+        console.log("Il body:");
+        console.log(req.body);
+        console.log("Hypnos trovate");
+        console.log(hypnos);
+
+        /*
+        if(users.length == 0) {
+            //add to db
+            const saltRounds = 7;
+            const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+
+            const newUser = new UserModel({ name:req.body.name, password: hashedPassword });
+            await newUser.save();
+
+        } else {
+            //validate
+            let user = users[0]; 
+            const passwordMatch = await bcrypt.compare(req.body.password, user.password);
+
+            if(passwordMatch) {
+                return res.status(200).send("Correct Password").json({
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                });
+            } else {
+                return res.status(401).send("Wrong Password").json({
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                });
+            }
+        }
+        */
+        return res.status(200).json({
+            msg: 'Ok',
+            data: hypnos,
             headers: { 
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
