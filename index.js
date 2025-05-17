@@ -18,7 +18,7 @@ const UserModel = require('./models/user.model')
 
 const HypnoModel = require('./models/hypno.model')
 
-const TmpHypnoModel = require('./models/tmpHypno.model')
+//const TmpHypnoModel = require('./models/tmpHypno.model')
 
 const { default: mongoose } = require('mongoose')
 
@@ -126,13 +126,14 @@ app.post('/tmpHypno', async (req, res) => {
         await newHypno.save();
 
         //temporary
-        let tmpHypnos = await TmpHypnoModel.find();
+        let tmpHypnos = await HypnoModel.find();
         console.log("Il body:");
         console.log(req.body);
         console.log("TmpHypnos trovate");
         console.log(tmpHypnos);
 
-        let newTmpHypno = new TmpHypnoModel(req.body.hypno);
+        let newTmpHypno = new HypnoModel(req.body.hypno);
+        newTmpHypno.createdAt = new Date();
         await newTmpHypno.save();
 
         /*
