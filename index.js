@@ -18,6 +18,8 @@ const UserModel = require('./models/user.model')
 
 const HypnoModel = require('./models/hypno.model')
 
+const TmpHypnoModel = require('./models/tmpHypno.model')
+
 const { default: mongoose } = require('mongoose')
 
 app.get('/userValidate', async (req, res) => {
@@ -113,6 +115,7 @@ app.post('/tmpHypno', async (req, res) => {
     }
     try {
 
+        //not temporary
         let hypnos = await HypnoModel.find();
         console.log("Il body:");
         console.log(req.body);
@@ -121,6 +124,33 @@ app.post('/tmpHypno', async (req, res) => {
 
         let newHypno = new HypnoModel(req.body.hypno);
         await newHypno.save();
+
+        //temporary
+        let tmpHypnos = await TmpHypnoModel.find();
+        console.log("Il body:");
+        console.log(req.body);
+        console.log("TmpHypnos trovate");
+        console.log(tmpHypnos);
+
+        let newTmpHypno = new TmpHypnoModel(req.body.hypno);
+        await newTmpHypno.save();
+
+        /*
+        in hypno, go to indexes and write:
+        In fields:
+        {
+            "createdAt": 1
+        }
+
+        (createdAt is added automatically cause of timestamps in schema)
+        (DO createdAt = new Date(); to add it manually. It's probably for the best. Or create a tmpHypno schema)
+        (604800 is a week, for testing, just do 1 min.)
+        In options:
+        {
+            "expireAfterSeconds": 604800
+        }
+
+        */
 
         /*
         if(users.length == 0) {

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 
-const hypnoSchema = new Schema({
+const tmpHypnoSchema = new Schema({
   name: {
     type: String,
     require: true
@@ -29,6 +29,8 @@ const hypnoSchema = new Schema({
   selectedKeyframeValue: {
     type: Number
   }
+}, {
+    timestamps: true
 })
 
-module.exports = mongoose.model('Hypno', hypnoSchema)
+module.exports = mongoose.model('TmpHypno', tmpHypnoSchema)
