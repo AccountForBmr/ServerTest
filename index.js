@@ -132,8 +132,9 @@ app.post('/tmpHypno', async (req, res) => {
         console.log("TmpHypnos trovate");
         console.log(tmpHypnos);
 
-        let newTmpHypno = new HypnoModel(req.body.hypno);
-        newTmpHypno.createdAt = new Date();
+        let tmpHypno = req.body.hypno;
+        tmpHypno.createdAt = new Date();
+        let newTmpHypno = new HypnoModel(tmpHypno);
         await newTmpHypno.save();
 
         /*
