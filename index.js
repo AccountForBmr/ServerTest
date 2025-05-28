@@ -7,6 +7,7 @@ require('dotenv').config()
 app.use(express.json())
 
 //test
+var cors = require('cors');
 app.use(cors({origin:"*"})); 
 
 const connectDB = require('./connectMongo')
