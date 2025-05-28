@@ -6,7 +6,7 @@ require('dotenv').config()
 
 app.use(express.json())
 
-//test
+//making cors work
 var cors = require('cors');
 app.use(cors({origin:"*"})); 
 
@@ -112,8 +112,7 @@ app.post('/tmpHypno', async (req, res) => {
         return res.status(500).json({
             msg: "Invalid request",
             headers: { 
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
+                'Content-Type': 'application/json'
             },
         })
     }
@@ -193,19 +192,15 @@ app.post('/tmpHypno', async (req, res) => {
             msg: 'Ok',
             data: hypnos,
             headers: { 
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
+                'Content-Type': 'application/json'
             },
-            'Access-Control-Allow-Origin': '*'
         })
     } catch (error) {
         return res.status(500).json({
             msg: error.message,
             headers: { 
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
             },
-            'Access-Control-Allow-Origin': '*'
         })
     }
 })
