@@ -6,6 +6,9 @@ require('dotenv').config()
 
 app.use(express.json())
 
+//test
+app.use(cors({origin:"*"})); 
+
 const connectDB = require('./connectMongo')
 
 const bcrypt = require('bcrypt')
@@ -192,6 +195,7 @@ app.post('/tmpHypno', async (req, res) => {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
             },
+            'Access-Control-Allow-Origin': '*'
         })
     } catch (error) {
         return res.status(500).json({
@@ -200,6 +204,7 @@ app.post('/tmpHypno', async (req, res) => {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
             },
+            'Access-Control-Allow-Origin': '*'
         })
     }
 })
